@@ -11,4 +11,15 @@ export { detect } from "./detect.js";
 export { classify } from "./classify.js";
 export { score, PILLAR_WEIGHTS } from "./score.js";
 export { recommend } from "./recommend.js";
-export { tokensOf, estimate } from "./estimate.js";
+export {
+  tokensOf,
+  estimate,
+  alwaysOnContext,
+  perSessionTax,
+  perDayTax,
+  looksLikeCodeOrMarkdown,
+  BYTES_PER_TOKEN,
+  PROSE_MULTIPLIER,
+  CODE_MULTIPLIER,
+  DEFAULT_SESSIONS_PER_DAY,
+} from "./estimate.js";

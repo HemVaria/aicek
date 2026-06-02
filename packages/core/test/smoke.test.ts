@@ -20,8 +20,9 @@ describe("@aicek/core public API", () => {
     expect(total).toBe(100);
   });
 
-  it("Stage 1 surfaces are stubbed, not silently faked", () => {
-    expect(() => core.tokensOf("hello")).toThrow(/not implemented/i);
+  it("not-yet-built surfaces are stubbed, not silently faked", () => {
     expect(() => core.classify({} as never)).toThrow(/not implemented/i);
+    expect(() => core.score({} as never)).toThrow(/not implemented/i);
+    expect(() => core.recommend({} as never, {} as never)).toThrow(/not implemented/i);
   });
 });

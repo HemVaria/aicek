@@ -27,18 +27,40 @@ Both are committed in `packages/core/src/version.ts`.
 ## 2. Token estimation (PRD §12)
 
 `tokensOf(text)` is the single source of truth; every other estimator composes
-it. All outputs carry a confidence level.
+it. All outputs carry a confidence level. Implemented in
+`packages/core/src/estimate.ts`.
+
+```
+tokensOf(text) = ceil( ceil(utf8Bytes(text) / 4) × multiplier )
+multiplier = 1.15 if the block looks like code/markdown, else 1.0
+```
 
 | Constant | Value | Confidence | Justification |
 |---|---|---|---|
-| bytes-per-token ratio | `4` (baseline) | medium | _TBD — cite tokenizer behavior._ |
-| prose multiplier | `1.0` | medium | _TBD._ |
-| code / markdown-table multiplier | `1.15` | medium | _TBD._ |
-| default sessions/day | `10` | low | _TBD — user-supplied; projection only._ |
+| `BYTES_PER_TOKEN` | `4` | medium | Common rule-of-thumb for English text under BPE tokenizers (~4 chars/token, ~1 byte/char for ASCII). Cross-agent, so a heuristic not a measurement; a vendored tokenizer can later raise this to **high**. |
+| `PROSE_MULTIPLIER` | `1.0` | medium | Prose is the baseline the 4-bytes ratio is calibrated against. |
+| `CODE_MULTIPLIER` | `1.15` | medium | Code and markdown tables carry more punctuation per byte (`{}`, `|`, `;`, operators), which BPE splits into more tokens — empirically ~10–20% denser than prose. |
+| `DEFAULT_SESSIONS_PER_DAY` | `10` | low | User-supplied projection input; the default only seeds `perDayTax` when the user gives no value. Projection, never a measurement. |
 
-Confidence levels: **high** = deterministic byte/char measurement; **medium** =
-heuristic ratio; **low** = behavioral projection. A vendored tokenizer may later
+**Confidence levels:** **high** = deterministic byte/char measurement; **medium**
+= heuristic ratio; **low** = behavioral projection. A vendored tokenizer may later
 raise specific estimates to high.
+
+**Code/markdown detection** (`looksLikeCodeOrMarkdown`) is deterministic and
+content-only: a block is treated as code/markdown if it contains a fenced code
+block (```` ``` ````), a markdown table separator row (`| --- |`), or a
+multi-column table body row. Everything else is prose.
+
+**Composed estimators** (all pure functions of the `ConfigInventory`):
+
+| Estimator | Formula | Confidence |
+|---|---|---|
+| `alwaysOnContext` | `tokensOf(CLAUDE.md) + Σ tokensOf(always-loaded rule)` | medium |
+| `perSessionTax` | `= alwaysOnContext` (paid once per session) | medium |
+| `perDayTax(sessions)` | `perSessionTax × sessions` (default 10) | low |
+
+An "always-loaded rule" is a rule with no path globs. Sums sort their inputs
+first, so the result is independent of file/array ordering (determinism, §3).
 
 ---
 
