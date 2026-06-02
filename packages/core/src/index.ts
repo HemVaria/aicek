@@ -8,7 +8,16 @@ export * from "./types.js";
 export { SCHEMA_VERSION, ENGINE_VERSION } from "./version.js";
 
 export { detect } from "./detect.js";
-export { classify } from "./classify.js";
+export {
+  classify,
+  signalsOf,
+  LENGTH_TOKENS_FULL,
+  ENFORCEMENT_THRESHOLD,
+  PROCEDURAL_THRESHOLD,
+  FREQUENCY_LOW,
+  PATH_THRESHOLD,
+  EXTERNALITY_THRESHOLD,
+} from "./classify.js";
 export { score, PILLAR_WEIGHTS } from "./score.js";
 export { recommend } from "./recommend.js";
 export {

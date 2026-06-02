@@ -86,9 +86,41 @@ scoring; identical inventory → byte-identical score and reasons.
 ## 4. Classification taxonomy (PRD §11)
 
 Five destinations — CLAUDE.md, Skill, Rule (path-scoped), Hook, MCP — chosen from
-six signals (length, procedural, path-specificity, enforcement intent, frequency,
-externality), each scored 0–1.
+six signals, each scored 0–1 from the text alone. Implemented in
+`packages/core/src/classify.ts`. The classifier always returns the deciding
+signals so users see *why*.
 
-The full signal-to-destination rule table is documented here as the classifier
-is implemented. The classifier always returns the deciding signals so users see
-*why*.
+### 4.1 Signals (0–1)
+
+| Signal | Heuristic |
+|---|---|
+| `length` | `min(1, tokensOf(text) / 200)` |
+| `procedural` | `min(1, (# numbered items + # bullets + # imperative-leading lines) / 5)` |
+| `pathSpecificity` | `min(1, (# globs `**/`,`*.ext` + dir tokens `src/`,`tests/`… + filenames-with-ext) / 3)` |
+| `enforcementIntent` | `min(1, # of {always, must, never, required, ensure, do not, after/before every} / 2)` |
+| `frequency` | `clamp(1 − 0.5·pathSpecificity − 0.3·conditionality − 0.5·procedural − 0.2·length, 0, 1)` |
+| `externality` | `min(1, # of {api, database, http, fetch, endpoint, mcp, server, service, webhook, oauth, token, url, URLs} / 2)` |
+
+`conditionality` counts `{when, if, only when, in case, unless, "for … files"}`.
+The key modeling choice: **always-on relevance (`frequency`) erodes with
+procedural bulk** — a long multi-step how-to is needed on demand, not every turn —
+so `procedural` and `length` pull `frequency` down. This is what lets a release
+runbook route to a Skill instead of squatting in CLAUDE.md.
+
+### 4.2 Decision table (ordered; first match wins — PRD §11.2)
+
+1. `enforcementIntent ≥ 0.5` **and** an event trigger (`after/before … commit/save/push/build`) → **Hook**
+2. `procedural ≥ 0.5` **and** `frequency < 0.5` → **Skill**
+3. `pathSpecificity ≥ 0.5` → **Rule (path-scoped)**
+4. `externality ≥ 0.5` → **MCP**
+5. otherwise (short, declarative, broadly relevant) → **CLAUDE.md**
+
+Thresholds are named constants in `classify.ts` (`ENFORCEMENT_THRESHOLD`,
+`PROCEDURAL_THRESHOLD`, `FREQUENCY_LOW`, `PATH_THRESHOLD`,
+`EXTERNALITY_THRESHOLD`); changing them bumps `ENGINE_VERSION`.
+
+### 4.3 Item extraction
+
+CLAUDE.md is split into heading-delimited blocks (fallback: blank-line
+paragraphs); each rule body is one item. Items are processed in document order
+for determinism, and each carries an `evidence` pointer (file + line).
