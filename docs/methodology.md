@@ -70,16 +70,48 @@ Score starts at 100; each pillar deducts from its own budget; deductions sum and
 clamp to `[0, 100]`. Every deduction carries a `reason` and an `evidence`
 pointer.
 
-| Pillar | Weight | What it measures | Justification |
-|---|---|---|---|
-| Context Economy | 30 | Cost of always-on context | _TBD._ |
-| Routing Correctness | 25 | Is each instruction in the right place? | _TBD._ |
-| Skill Effectiveness | 20 | Do skills earn their keep? | _TBD._ |
-| Structural Hygiene | 15 | Is the setup well-formed? | _TBD._ |
-| Redundancy & Overlap | 10 | Duplication & conflict | _TBD._ |
+| Pillar | Weight | What it measures |
+|---|---|---|
+| Context Economy | 30 | Cost of always-on context |
+| Routing Correctness | 25 | Is each instruction in the right place? |
+| Skill Effectiveness | 20 | Do skills earn their keep? |
+| Structural Hygiene | 15 | Is the setup well-formed? |
+| Redundancy & Overlap | 10 | Duplication & conflict |
 
-Determinism guarantees: no `Date.now()`, no `Math.random()`, inputs sorted before
-scoring; identical inventory → byte-identical score and reasons.
+Implemented in `packages/core/src/score.ts`. Each pillar emits `Deduction`s
+(`{ id, points, reason, evidence }`); points are capped cumulatively to the
+pillar budget so a pillar **never goes negative** (PRD §10.3). `total =
+Σ pillar.score`, clamped to `[0, 100]`.
+
+### 3.1 Deduction rules (v1 constants — changing any bumps `ENGINE_VERSION`)
+
+**Context Economy** — `CLAUDE.md` over `1200` always-on tokens deducts
+`ceil(overage / 250)`; always-on rules (no globs) over `400` tokens deduct
+`ceil(overage / 250)`.
+
+**Routing Correctness** — runs the classifier (§4) over CLAUDE.md blocks; every
+block whose ideal destination is **not** CLAUDE.md (i.e. a skill/rule/hook/mcp
+squatting in always-on context) deducts `4`, with the classifier's reason as
+evidence.
+
+**Skill Effectiveness** — each skill with an empty or `<20`-char description
+deducts `5` (agents invoke skills by description; a weak one may never activate).
+
+**Structural Hygiene** — no `.gitignore`/`.claudeignore` deducts `5`; no
+`CLAUDE.md` deducts `4`.
+
+**Redundancy & Overlap** — duplicate/near-duplicate instruction blocks (matched
+by normalized first line) deduct `3` per extra occurrence.
+
+### 3.2 Determinism guarantees
+No `Date.now()`, no `Math.random()`; the inventory is already sorted by `detect`,
+and items are processed in document order. Property: identical `ConfigInventory`
+→ identical score and reasons (covered by a test).
+
+> Note (v1): the Routing pillar can over-penalize legitimately-global routing
+> instructions that merely *mention* external tools (they trip the MCP signal).
+> This is tracked for threshold tuning; the score stays honest and every
+> deduction is explained, so nothing is hidden.
 
 ---
 

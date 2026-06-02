@@ -21,7 +21,6 @@ describe("@aicek/core public API", () => {
   });
 
   it("not-yet-built surfaces are stubbed, not silently faked", () => {
-    expect(() => core.score({} as never)).toThrow(/not implemented/i);
     expect(() => core.recommend({} as never, {} as never)).toThrow(/not implemented/i);
   });
 });
