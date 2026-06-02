@@ -156,3 +156,29 @@ Thresholds are named constants in `classify.ts` (`ENFORCEMENT_THRESHOLD`,
 CLAUDE.md is split into heading-delimited blocks (fallback: blank-line
 paragraphs); each rule body is one item. Items are processed in document order
 for determinism, and each carries an `evidence` pointer (file + line).
+
+---
+
+## 5. Recommendations (PRD §13)
+
+`recommend(inventory, score)` maps every scored deduction to an actionable fix.
+Implemented in `packages/core/src/recommend.ts`.
+
+Each recommendation has: `severity` (P0–P3, by health-gain points: ≥8 P0, ≥5 P1,
+≥3 P2, else P3), `issue` (the deduction reason), `fix` (concrete action),
+`estTokenSaving` (`{value, confidence}`), `estHealthGain` (`{points, pillar}`),
+and `reversible`.
+
+**Honest savings.** A token saving is computed only where it is real and
+measurable — Context Economy overages (CLAUDE.md trim, rule scoping) report the
+actual overage at **medium** confidence. Fixes that don't remove always-on tokens
+(rewriting a skill description, adding an ignore file, relocating a block whose
+token count we don't carry) report `0` at **low** confidence rather than inventing
+a number (PRD §20).
+
+**Reversibility.** Fixes `optimize` can apply and undo are `reversible: true`;
+fixes requiring human authoring (writing a skill description, writing a new
+CLAUDE.md) are `reversible: false`.
+
+**Ordering.** Sorted by `estHealthGain.points` desc, then `estTokenSaving.value`
+desc — highest-impact first.

@@ -20,7 +20,8 @@ describe("@aicek/core public API", () => {
     expect(total).toBe(100);
   });
 
-  it("not-yet-built surfaces are stubbed, not silently faked", () => {
-    expect(() => core.recommend({} as never, {} as never)).toThrow(/not implemented/i);
+  it("the engine API is fully wired", () => {
+    expect(typeof core.detect).toBe("function");
+    expect(typeof core.recommend).toBe("function");
   });
 });
