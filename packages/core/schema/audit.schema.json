@@ -1,0 +1,133 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/HemVaria/aicek/packages/core/schema/audit.schema.json",
+  "title": "AICEK Audit Artifact",
+  "description": "Versioned artifact emitted by `aicek doctor --json` (PRD §14). The only contract between AICEK and Hermes (§19). Stage 0 stub — shapes only.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schemaVersion",
+    "engineVersion",
+    "generatedFor",
+    "healthScore",
+    "pillars",
+    "classification",
+    "estimates",
+    "recommendations"
+  ],
+  "properties": {
+    "schemaVersion": { "type": "string", "pattern": "^\\d+\\.\\d+\\.\\d+$" },
+    "engineVersion": { "type": "string", "pattern": "^\\d+\\.\\d+\\.\\d+$" },
+    "generatedFor": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["stack", "agent"],
+      "properties": {
+        "stack": { "type": "array", "items": { "type": "string" } },
+        "agent": { "type": "string", "enum": ["claude-code"] }
+      }
+    },
+    "healthScore": { "type": "integer", "minimum": 0, "maximum": 100 },
+    "pillars": { "type": "array", "items": { "$ref": "#/$defs/pillarResult" } },
+    "classification": { "type": "array", "items": { "$ref": "#/$defs/classification" } },
+    "estimates": { "type": "array", "items": { "$ref": "#/$defs/estimate" } },
+    "recommendations": { "type": "array", "items": { "$ref": "#/$defs/recommendation" } }
+  },
+  "$defs": {
+    "confidence": { "type": "string", "enum": ["high", "medium", "low"] },
+    "severity": { "type": "string", "enum": ["P0", "P1", "P2", "P3"] },
+    "location": { "type": "string", "enum": ["claude-md", "skill", "rule", "hook", "mcp"] },
+    "pillarName": {
+      "type": "string",
+      "enum": [
+        "context-economy",
+        "routing-correctness",
+        "skill-effectiveness",
+        "structural-hygiene",
+        "redundancy-overlap"
+      ]
+    },
+    "evidence": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["file"],
+      "properties": {
+        "file": { "type": "string" },
+        "line": { "type": "integer", "minimum": 1 }
+      }
+    },
+    "deduction": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "points", "reason", "evidence"],
+      "properties": {
+        "id": { "type": "string" },
+        "points": { "type": "number", "minimum": 0 },
+        "reason": { "type": "string" },
+        "evidence": { "$ref": "#/$defs/evidence" }
+      }
+    },
+    "pillarResult": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["pillar", "score", "max", "deductions"],
+      "properties": {
+        "pillar": { "$ref": "#/$defs/pillarName" },
+        "score": { "type": "number", "minimum": 0 },
+        "max": { "type": "number", "minimum": 0 },
+        "deductions": { "type": "array", "items": { "$ref": "#/$defs/deduction" } }
+      }
+    },
+    "classification": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["item", "location", "reason"],
+      "properties": {
+        "item": { "type": "string" },
+        "location": { "$ref": "#/$defs/location" },
+        "reason": { "type": "string" },
+        "evidence": { "$ref": "#/$defs/evidence" }
+      }
+    },
+    "estimate": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["name", "value", "confidence"],
+      "properties": {
+        "name": { "type": "string" },
+        "value": { "type": "number" },
+        "confidence": { "$ref": "#/$defs/confidence" }
+      }
+    },
+    "recommendation": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "severity", "issue", "fix", "estTokenSaving", "estHealthGain", "reversible"],
+      "properties": {
+        "id": { "type": "string" },
+        "severity": { "$ref": "#/$defs/severity" },
+        "issue": { "type": "string" },
+        "fix": { "type": "string" },
+        "estTokenSaving": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["value", "confidence"],
+          "properties": {
+            "value": { "type": "number" },
+            "confidence": { "$ref": "#/$defs/confidence" }
+          }
+        },
+        "estHealthGain": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["points", "pillar"],
+          "properties": {
+            "points": { "type": "number" },
+            "pillar": { "$ref": "#/$defs/pillarName" }
+          }
+        },
+        "reversible": { "type": "boolean" }
+      }
+    }
+  }
+}

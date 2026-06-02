@@ -1,0 +1,24 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(npm view *)",
+      "Bash(npm pack *)",
+      "Bash(npm whoami *)",
+      "Bash(npm publish *)",
+      "Bash(mkdir -p \"d:\\\\Projects\\\\aicek-test\")",
+      "Read(//d/Projects/**)",
+      "Bash(npx aicek@latest)",
+      "Bash(gh --version)",
+      "Bash(gh auth *)",
+      "Bash(ls \"C:\\\\Users\\\\HP\\\\.claude\\\\projects\" | cat)",
+      "Read(//c/Users/HP/.claude/projects/**)",
+      "mcp__plugin_context-mode_context-mode__ctx_execute",
+      "Bash(npm --version)",
+      "Bash(git --version)",
+      "Bash(git -C \"d:\\\\Projects\\\\aicek\" rev-parse --is-inside-work-tree)",
+      "Bash(git config *)",
+      "Bash(echo \"user.name: $\\(git config user.name\\)\")",
+      "Bash(echo \"user.email: $\\(git config user.email\\)\")"
+    ]
+  }
+}

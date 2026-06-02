@@ -1,0 +1,30 @@
+{
+  "name": "@aicek/core",
+  "version": "0.0.1",
+  "description": "AICEK configuration intelligence engine — detection, classification, health scoring, token estimation, and recommendations. Pure functions, zero CLI dependencies.",
+  "type": "module",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    },
+    "./schema/audit": "./schema/audit.schema.json"
+  },
+  "files": ["dist", "schema", "README.md"],
+  "engines": { "node": ">=20" },
+  "scripts": {
+    "build": "tsc --build",
+    "clean": "tsc --build --clean",
+    "prepublishOnly": "npm run clean && npm run build"
+  },
+  "keywords": ["aicek", "configuration-intelligence", "health-score", "claude-code", "ai-coding"],
+  "license": "MIT",
+  "author": "Hem Varia",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/HemVaria/aicek",
+    "directory": "packages/core"
+  }
+}

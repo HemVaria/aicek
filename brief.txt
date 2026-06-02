@@ -1,0 +1,488 @@
+# TASK
+
+You are a senior product strategist, startup founder, and PRD architect.
+
+I am providing an existing PRD for CCEK.
+
+Your job is NOT to rewrite it from scratch.
+
+Your job is to deeply refactor it based on the strategic insights below while preserving all useful research, competitive analysis, technical findings, and ecosystem knowledge already present.
+
+Generate a completely updated PRD that reflects the new positioning.
+
+---
+
+# CRITICAL STRATEGIC SHIFT
+
+The biggest insight discovered after reviewing the entire ecosystem is:
+
+CCEK should NOT be positioned primarily as:
+
+• A skill installer
+
+• A skill marketplace
+
+• A skill repository
+
+• A curated skill collection
+
+• A better version of Antigravity
+
+• A better version of Anthropic Skills
+
+• A better version of Awesome Claude Skills
+
+These markets are already crowded.
+
+Instead, CCEK should create and own a new category:
+
+CONFIGURATION INTELLIGENCE
+
+Tagline examples:
+
+"The configuration intelligence layer for AI coding agents."
+
+or
+
+"Analyze, optimize, and maintain AI coding environments."
+
+or
+
+"The operating system for AI agent configuration."
+
+The product's primary value is NOT installing skills.
+
+The primary value is understanding an AI coding environment and telling users what should live where.
+
+---
+
+# NEW CORE PRODUCT THESIS
+
+Current ecosystem teaches users:
+
+"Install more skills."
+
+Nobody teaches users:
+
+• Which skills should exist
+
+• Which skills should be removed
+
+• Which rules should be path scoped
+
+• Which instructions belong in CLAUDE.md
+
+• Which instructions belong in hooks
+
+• Which instructions belong in MCPs
+
+• Which instructions belong in skills
+
+• Why token waste exists
+
+• Why certain configurations perform poorly
+
+• Why certain skills never activate
+
+CCEK should become the expert system for AI agent configuration.
+
+This is the primary moat.
+
+---
+
+# REPOSITION THE PRODUCT
+
+Replace the current positioning:
+
+"Create React App for Claude Code"
+
+with:
+
+"The first configuration intelligence platform for AI coding agents."
+
+or
+
+"The doctor for AI coding environments."
+
+or
+
+"The operating system for AI agent configuration."
+
+The product should be perceived as:
+
+Datadog for agent configuration
+
+GitHub Copilot for configuration decisions
+
+Not a skill installer.
+
+---
+
+# NEW PRIMARY FEATURE
+
+Promote ccek doctor to the flagship feature.
+
+Doctor should become the hero command.
+
+Example:
+
+ccek doctor
+
+Output:
+
+Health Score: 72/100
+
+Issues:
+
+• CLAUDE.md too large
+
+• Rules always loading
+
+• Duplicate skills detected
+
+• MCP overlap detected
+
+• Configuration drift detected
+
+• Skills never activate
+
+Potential Savings:
+
+4,800 tokens/session
+
+Expected Quality Improvement:
+
++18%
+
+The PRD should position Doctor as the most memorable feature.
+
+---
+
+# REFRAME ALL FEATURES
+
+Every feature should support Configuration Intelligence.
+
+Current hierarchy:
+
+1. Installer
+2. Skills
+3. Optimization
+
+New hierarchy:
+
+1. Configuration Analysis
+2. Configuration Intelligence
+3. Configuration Optimization
+4. Configuration Monitoring
+5. Skill Management
+
+Skills become a supporting feature.
+
+Not the product.
+
+---
+
+# REDUCE EMPHASIS ON SKILLS
+
+Refactor all sections that heavily focus on:
+
+• Massive skill catalogs
+
+• Skill counts
+
+• Skill directories
+
+• Skill collections
+
+• Marketplace style language
+
+Replace with:
+
+Curated minimal skills
+
+Configuration quality
+
+Skill effectiveness
+
+Skill activation rate
+
+Skill health
+
+Skill ROI
+
+Installed versus actually used
+
+The philosophy should be:
+
+Install less.
+
+Use better.
+
+Measure everything.
+
+---
+
+# ADD NEW PRODUCT CATEGORY
+
+Create a completely new section:
+
+Configuration Intelligence Engine
+
+Describe:
+
+1. Configuration Classification
+
+Determines whether instructions belong in:
+
+• CLAUDE.md
+
+• Skill
+
+• Rule
+
+• Hook
+
+• MCP
+
+2. Configuration Health Scoring
+
+Health score from 0 to 100
+
+3. Configuration Recommendations
+
+Specific fixes
+
+4. Configuration Drift Detection
+
+Track changes over time
+
+5. Configuration Efficiency Analysis
+
+Token impact
+
+Complexity impact
+
+Maintenance impact
+
+6. Configuration Topology Mapping
+
+Show relationships between:
+
+Skills
+
+Rules
+
+Hooks
+
+MCPs
+
+CLAUDE.md
+
+This becomes the heart of the product.
+
+---
+
+# INTRODUCE CONFIGURATION HEALTH SCORE
+
+Add a new first class concept:
+
+Configuration Health Score
+
+Example factors:
+
+CLAUDE.md size
+
+Rule architecture
+
+Path scoping
+
+Skill usage
+
+Duplicate instructions
+
+Unused skills
+
+Hook quality
+
+MCP redundancy
+
+Configuration complexity
+
+The score should become the core KPI.
+
+Think Lighthouse Score for AI agent configuration.
+
+---
+
+# INTRODUCE CONFIGURATION DRIFT
+
+Add a new feature area:
+
+Configuration Drift Detection
+
+Detect:
+
+Changes in rules
+
+Changes in CLAUDE.md
+
+Changes in skills
+
+Changes in hooks
+
+Changes in MCPs
+
+Show timeline history.
+
+Example:
+
+Health Score
+
+March: 91
+
+April: 84
+
+May: 67
+
+Reason:
+
+Added 5 always loaded rules.
+
+This creates long term value.
+
+---
+
+# UPDATE ROADMAP
+
+Refactor roadmap.
+
+New Phase 1:
+
+Doctor
+
+Audit
+
+Optimize
+
+Health Score
+
+Classification Engine
+
+Phase 2:
+
+Skill Effectiveness
+
+Drift Detection
+
+Health Monitoring
+
+Phase 3:
+
+Hermes Integration
+
+Long term intelligence
+
+Configuration history
+
+Phase 4:
+
+Cross agent support
+
+Claude Code
+
+Cursor
+
+Gemini CLI
+
+Codex
+
+Windsurf
+
+Universal configuration layer
+
+---
+
+# REFRAME HERMES
+
+Keep Hermes separate.
+
+Hermes is NOT a feature inside CCEK.
+
+Hermes is a future standalone product.
+
+Relationship:
+
+CCEK produces audits.
+
+Hermes consumes audits.
+
+Hermes generates intelligence.
+
+CCEK applies fixes.
+
+Maintain clear product separation.
+
+---
+
+# REWRITE UNIQUE VALUE PROPOSITION
+
+The biggest differentiation is no longer:
+
+Skill installer
+
+Token optimizer
+
+CLAUDE.md generator
+
+Instead:
+
+Configuration Intelligence
+
+Configuration Health Score
+
+Configuration Doctor
+
+Configuration Drift Detection
+
+Configuration Classification
+
+These are the core moats.
+
+---
+
+# CLEAN UP OVERLY AGGRESSIVE CLAIMS
+
+Review all statistics and claims.
+
+Mark uncertain claims as estimates.
+
+Reduce hype language.
+
+Replace unverifiable statements with conservative wording.
+
+Keep credibility high.
+
+---
+
+# FINAL OUTPUT REQUIREMENTS
+
+Generate a fully updated PRD.
+
+Preserve valuable ecosystem research.
+
+Preserve competitive landscape.
+
+Preserve technical architecture where useful.
+
+Refactor product strategy entirely around Configuration Intelligence.
+
+Make CCEK feel like a new category.
+
+The final PRD should make readers think:
+
+"This is not another skill tool."
+
+"This is the first tool that understands AI coding agent configuration."
+
+
+i have further suggestions and they are : here in text so give a detailed verdict and suggestion to include and which not to include and then we will create further prd  

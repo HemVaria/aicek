@@ -1,0 +1,37 @@
+{
+  "name": "aicek-monorepo",
+  "version": "0.0.0",
+  "private": true,
+  "description": "Monorepo for AICEK — the configuration intelligence layer for AI coding agents.",
+  "type": "module",
+  "engines": { "node": ">=20" },
+  "workspaces": [
+    "packages/*"
+  ],
+  "scripts": {
+    "build": "npm run build --workspaces --if-present",
+    "clean": "npm run clean --workspaces --if-present",
+    "typecheck": "tsc --build",
+    "test": "vitest run",
+    "test:watch": "vitest"
+  },
+  "keywords": [
+    "claude-code",
+    "cursor",
+    "windsurf",
+    "ai-coding",
+    "configuration",
+    "cli",
+    "token-optimization",
+    "anthropic",
+    "copilot"
+  ],
+  "license": "MIT",
+  "author": "Hem Varia",
+  "repository": { "type": "git", "url": "https://github.com/HemVaria/aicek" },
+  "devDependencies": {
+    "@types/node": "^22.10.0",
+    "typescript": "^5.7.0",
+    "vitest": "^2.1.0"
+  }
+}

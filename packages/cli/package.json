@@ -1,0 +1,35 @@
+{
+  "name": "aicek",
+  "version": "0.0.1",
+  "description": "AI Coding Efficiency Kit. Audit, score, and optimize your AI coding agent setup. Full release coming soon.",
+  "type": "module",
+  "bin": { "aicek": "bin/aicek.js" },
+  "files": ["bin", "dist", "README.md", "LICENSE"],
+  "engines": { "node": ">=20" },
+  "scripts": {
+    "build": "tsc --build",
+    "clean": "tsc --build --clean",
+    "prepublishOnly": "npm run clean && npm run build"
+  },
+  "dependencies": {
+    "@aicek/core": "0.0.1"
+  },
+  "keywords": [
+    "claude-code",
+    "cursor",
+    "windsurf",
+    "ai-coding",
+    "configuration",
+    "cli",
+    "token-optimization",
+    "anthropic",
+    "copilot"
+  ],
+  "license": "MIT",
+  "author": "Hem Varia",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/HemVaria/aicek",
+    "directory": "packages/cli"
+  }
+}
