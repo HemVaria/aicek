@@ -1,0 +1,73 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/HemVaria/aicek/registry/schema.json",
+  "title": "AICEK Marketplace Registry",
+  "description": "Schema for the AICEK marketplace seed consumed by `aicek init` (PRD Stage 3).",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schemaVersion", "entries"],
+  "properties": {
+    "schemaVersion": { "type": "string", "pattern": "^\\d+\\.\\d+\\.\\d+$" },
+    "description": { "type": "string" },
+    "entries": { "type": "array", "items": { "$ref": "#/$defs/entry" } }
+  },
+  "$defs": {
+    "entry": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "name",
+        "owner",
+        "repo_url",
+        "category",
+        "install_type",
+        "install_command",
+        "token_note",
+        "compatible_with",
+        "health_impact",
+        "attribution_required"
+      ],
+      "properties": {
+        "name": { "type": "string" },
+        "owner": { "type": "string" },
+        "repo_url": { "type": "string", "format": "uri" },
+        "category": {
+          "type": "string",
+          "enum": [
+            "planning",
+            "token-compression",
+            "frontend-design",
+            "context",
+            "seo",
+            "code-review",
+            "design",
+            "other"
+          ]
+        },
+        "install_type": {
+          "type": "string",
+          "enum": ["npx", "pipx", "plugin", "git", "mcp", "bundled"]
+        },
+        "install_command": { "type": "string" },
+        "token_note": { "type": "string" },
+        "compatible_with": {
+          "type": "array",
+          "items": { "type": "string" },
+          "minItems": 1
+        },
+        "health_impact": { "type": "string" },
+        "attribution_required": { "type": "boolean" },
+        "license": { "type": "string" },
+        "stars": { "type": "integer", "minimum": 0 },
+        "verified": {
+          "type": "boolean",
+          "description": "Repo existence, owner, url and license confirmed against the GitHub API."
+        },
+        "installVerified": {
+          "type": "boolean",
+          "description": "The exact install_command has been confirmed from the tool's own README/docs."
+        }
+      }
+    }
+  }
+}
