@@ -11,6 +11,7 @@ import { runDoctor } from "./doctor.js";
 import { renderMarketplace } from "./marketplace.js";
 import { runInit } from "./init.js";
 import { runSkills } from "./skills.js";
+import { runOptimize, runRestore } from "./optimize.js";
 
 const HELP = `
   ${pc.bold("aicek")} — the configuration intelligence layer for AI coding agents
@@ -23,6 +24,8 @@ const HELP = `
     marketplace       List the tools aicek recommends (read-only)
     init              Pick a profile + tools and generate clean config
     skills            Skill health report — dead/weak skills from transcripts
+    optimize          Apply safe, reversible fixes (archives originals first)
+    restore <name>    Restore a skill archived by optimize
     help              Show this help
     version           Print version info
 
@@ -98,6 +101,18 @@ export async function run(argv: string[] = process.argv.slice(2)): Promise<void>
     case "skills":
       process.stdout.write(await runSkills({ cwd: args.cwd, projectsDir: args.projects }));
       return;
+    case "optimize":
+      await runOptimize({ cwd: args.cwd, dryRun: args.dryRun, yes: args.yes, projectsDir: args.projects });
+      return;
+    case "restore": {
+      const name = argv[1] && !argv[1].startsWith("-") ? argv[1] : "";
+      if (!name) {
+        process.stdout.write("usage: aicek restore <skill-name>\n");
+        return;
+      }
+      await runRestore({ cwd: args.cwd, name });
+      return;
+    }
     case "version":
       process.stdout.write(`aicek (schema v${SCHEMA_VERSION}, engine v${ENGINE_VERSION})\n`);
       return;

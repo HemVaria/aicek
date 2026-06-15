@@ -17,6 +17,13 @@ export {
   type InstallType,
 } from "./registry.js";
 export {
+  planOptimize,
+  type OptimizePlan,
+  type OptimizeChange,
+  type OptimizeKind,
+  type OptimizeInput,
+} from "./optimize.js";
+export {
   PROFILES,
   planInit,
   generateClaudeMd,
