@@ -13,6 +13,7 @@
   },
   "dependencies": {
     "@aicek/core": "0.0.1",
+    "@clack/prompts": "^0.8.2",
     "picocolors": "^1.1.1"
   },
   "keywords": [

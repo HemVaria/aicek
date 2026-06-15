@@ -10,6 +10,25 @@ export { SCHEMA_VERSION, ENGINE_VERSION } from "./version.js";
 export { detect } from "./detect.js";
 export { audit } from "./audit.js";
 export {
+  REGISTRY,
+  REGISTRY_SCHEMA_VERSION,
+  findEntry,
+  type RegistryEntry,
+  type InstallType,
+} from "./registry.js";
+export {
+  PROFILES,
+  planInit,
+  generateClaudeMd,
+  generateIgnore,
+  attributionFor,
+  type InitProfile,
+  type InitPlan,
+  type PlannedFile,
+  type InstallStep,
+  type FileAction,
+} from "./generate.js";
+export {
   classify,
   signalsOf,
   LENGTH_TOKENS_FULL,
