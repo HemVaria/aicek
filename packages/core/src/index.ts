@@ -8,6 +8,7 @@ export * from "./types.js";
 export { SCHEMA_VERSION, ENGINE_VERSION } from "./version.js";
 
 export { detect } from "./detect.js";
+export { audit } from "./audit.js";
 export {
   classify,
   signalsOf,

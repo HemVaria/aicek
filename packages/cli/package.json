@@ -12,7 +12,8 @@
     "prepublishOnly": "npm run clean && npm run build"
   },
   "dependencies": {
-    "@aicek/core": "0.0.1"
+    "@aicek/core": "0.0.1",
+    "picocolors": "^1.1.1"
   },
   "keywords": [
     "claude-code",
