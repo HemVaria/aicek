@@ -1,6 +1,6 @@
 {
   "name": "aicek",
-  "version": "0.0.1",
+  "version": "0.1.0",
   "description": "AI Coding Efficiency Kit. Audit, score, and optimize your AI coding agent setup. Full release coming soon.",
   "type": "module",
   "bin": { "aicek": "bin/aicek.js" },
@@ -12,7 +12,7 @@
     "prepublishOnly": "npm run clean && npm run build"
   },
   "dependencies": {
-    "@aicek/core": "0.0.1",
+    "@aicek/core": "^0.1.0",
     "@clack/prompts": "^0.8.2",
     "picocolors": "^1.1.1"
   },
