@@ -1,0 +1,35 @@
+# aicek
+
+> The configuration intelligence layer for AI coding agents. A read-only doctor
+> and a 0–100 health score that tells you where each instruction should live —
+> CLAUDE.md, a skill, a path-scoped rule, a hook, or an MCP — and what bloat costs
+> you per session. Not a skill installer. Install less. Use better. Measure everything.
+
+## What it does
+- `npx aicek doctor` — audit the current project: a 0–100 configuration health
+  score across five pillars (Context Economy, Routing Correctness, Skill
+  Effectiveness, Structural Hygiene, Redundancy & Overlap), with a reason and an
+  evidence pointer for every deduction. Read-only.
+- `aicek doctor --json` — emit the versioned audit artifact (the only contract
+  with downstream tools).
+- `aicek doctor --html` / `--share` — a shareable HTML report / SVG score card.
+- `aicek marketplace` — the tools aicek recommends, by category.
+- `aicek init` — pick a profile + tools and generate a clean CLAUDE.md + ignore
+  config (interactive; `--dry-run` and `--yes` supported).
+- `aicek skills` — skill health: which skills are dead (never triggered) or have
+  weak descriptions, from your transcripts.
+- `aicek optimize` / `aicek restore <name>` — apply safe, reversible fixes
+  (originals are archived first).
+
+## Principles
+- Every number is an estimate, labeled with a confidence level (high/medium/low).
+- Determinism is sacred: same input → same score and reasons.
+- Read-only by default; writes only on explicit init/optimize, always reversible.
+- Every deduction carries a reason — no black-box scores.
+- Attribution always: installed tools credit their owners.
+
+## Links
+- Repo: https://github.com/HemVaria/aicek
+- Methodology (how the score is computed): docs/methodology.md
+- Audit schema: packages/core/schema/audit.schema.json
+- Marketplace registry: registry/registry.json

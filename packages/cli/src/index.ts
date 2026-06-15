@@ -31,6 +31,8 @@ const HELP = `
 
   ${pc.bold("doctor options")}
     --json            Emit the audit artifact as JSON (PRD §14)
+    --html [file]     Write a shareable HTML report (default: aicek-report.html)
+    --share [file]    Write an SVG health-score card (default: aicek-card.svg)
     --cwd <path>      Directory to audit (default: current directory)
     --sessions <n>    Sessions/day for the per-day token projection (default: 10)
 
@@ -46,6 +48,8 @@ const HELP = `
 interface ParsedArgs {
   command: string;
   json: boolean;
+  html: string | boolean;
+  share: string | boolean;
   dryRun: boolean;
   yes: boolean;
   profile: string | undefined;
@@ -58,6 +62,8 @@ export function parseArgs(argv: string[]): ParsedArgs {
   const out: ParsedArgs = {
     command: argv[0] && !argv[0].startsWith("-") ? argv[0] : "help",
     json: false,
+    html: false,
+    share: false,
     dryRun: false,
     yes: false,
     profile: undefined,
@@ -68,7 +74,15 @@ export function parseArgs(argv: string[]): ParsedArgs {
   for (let i = 0; i < argv.length; i++) {
     const a = argv[i];
     if (a === "--json") out.json = true;
-    else if (a === "--dry-run") out.dryRun = true;
+    else if (a === "--html") {
+      const nx = argv[i + 1];
+      if (nx && !nx.startsWith("-")) out.html = argv[++i]!;
+      else out.html = true;
+    } else if (a === "--share") {
+      const nx = argv[i + 1];
+      if (nx && !nx.startsWith("-")) out.share = argv[++i]!;
+      else out.share = true;
+    } else if (a === "--dry-run") out.dryRun = true;
     else if (a === "--yes" || a === "-y") out.yes = true;
     else if (a === "--profile") out.profile = argv[++i];
     else if (a === "--cwd") out.cwd = argv[++i] ?? out.cwd;
@@ -86,7 +100,13 @@ export async function run(argv: string[] = process.argv.slice(2)): Promise<void>
 
   switch (args.command) {
     case "doctor": {
-      const output = await runDoctor({ cwd: args.cwd, json: args.json, sessions: args.sessions });
+      const output = await runDoctor({
+        cwd: args.cwd,
+        json: args.json,
+        sessions: args.sessions,
+        html: args.html,
+        share: args.share,
+      });
       process.stdout.write(output + "\n");
       return;
     }

@@ -9,6 +9,7 @@ export { SCHEMA_VERSION, ENGINE_VERSION } from "./version.js";
 
 export { detect } from "./detect.js";
 export { audit } from "./audit.js";
+export { renderHtml, renderShareSvg } from "./report.js";
 export {
   REGISTRY,
   REGISTRY_SCHEMA_VERSION,

@@ -1,5 +1,5 @@
 import { describe, it, expect, beforeEach, afterEach } from "vitest";
-import { mkdtempSync, rmSync, writeFileSync, readdirSync, statSync } from "node:fs";
+import { mkdtempSync, rmSync, writeFileSync, readdirSync, statSync, existsSync, readFileSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
 import { runDoctor } from "../src/doctor.js";
@@ -66,6 +66,21 @@ describe("aicek doctor", () => {
 
   it("is deterministic", async () => {
     expect(await runDoctor({ cwd: dir, json: true })).toBe(await runDoctor({ cwd: dir, json: true }));
+  });
+
+  it("--html writes a self-contained report file", async () => {
+    const msg = await runDoctor({ cwd: dir, html: true });
+    expect(msg).toMatch(/Wrote HTML report/);
+    expect(existsSync(join(dir, "aicek-report.html"))).toBe(true);
+    expect(readFileSync(join(dir, "aicek-report.html"), "utf8")).toMatch(/^<!doctype html>/);
+  });
+
+  it("--share writes an SVG card", async () => {
+    const msg = await runDoctor({ cwd: dir, share: "card.svg" });
+    expect(msg).toMatch(/Wrote share card/);
+    const svg = readFileSync(join(dir, "card.svg"), "utf8");
+    expect(svg).toMatch(/^<svg /);
+    expect(svg).toContain("#aicek");
   });
 });
 
