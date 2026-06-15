@@ -41,6 +41,14 @@ export {
 export { score, PILLAR_WEIGHTS } from "./score.js";
 export { recommend } from "./recommend.js";
 export {
+  countSkillActivations,
+  suggestDescription,
+  assessSkills,
+  WEAK_DESCRIPTION_MIN_CHARS,
+  type SkillHealth,
+  type SkillStatus,
+} from "./skills.js";
+export {
   tokensOf,
   estimate,
   alwaysOnContext,

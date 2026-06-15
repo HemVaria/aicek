@@ -10,6 +10,7 @@ import { SCHEMA_VERSION, ENGINE_VERSION } from "@aicek/core";
 import { runDoctor } from "./doctor.js";
 import { renderMarketplace } from "./marketplace.js";
 import { runInit } from "./init.js";
+import { runSkills } from "./skills.js";
 
 const HELP = `
   ${pc.bold("aicek")} — the configuration intelligence layer for AI coding agents
@@ -21,6 +22,7 @@ const HELP = `
     doctor            Audit the current project and print a 0–100 health score
     marketplace       List the tools aicek recommends (read-only)
     init              Pick a profile + tools and generate clean config
+    skills            Skill health report — dead/weak skills from transcripts
     help              Show this help
     version           Print version info
 
@@ -45,6 +47,7 @@ interface ParsedArgs {
   yes: boolean;
   profile: string | undefined;
   cwd: string;
+  projects: string | undefined;
   sessions: number | undefined;
 }
 
@@ -56,6 +59,7 @@ export function parseArgs(argv: string[]): ParsedArgs {
     yes: false,
     profile: undefined,
     cwd: process.cwd(),
+    projects: undefined,
     sessions: undefined,
   };
   for (let i = 0; i < argv.length; i++) {
@@ -65,6 +69,7 @@ export function parseArgs(argv: string[]): ParsedArgs {
     else if (a === "--yes" || a === "-y") out.yes = true;
     else if (a === "--profile") out.profile = argv[++i];
     else if (a === "--cwd") out.cwd = argv[++i] ?? out.cwd;
+    else if (a === "--projects") out.projects = argv[++i];
     else if (a === "--sessions") {
       const n = Number(argv[++i]);
       if (Number.isFinite(n) && n > 0) out.sessions = n;
@@ -89,6 +94,9 @@ export async function run(argv: string[] = process.argv.slice(2)): Promise<void>
       return;
     case "init":
       await runInit({ cwd: args.cwd, dryRun: args.dryRun, yes: args.yes, profile: args.profile });
+      return;
+    case "skills":
+      process.stdout.write(await runSkills({ cwd: args.cwd, projectsDir: args.projects }));
       return;
     case "version":
       process.stdout.write(`aicek (schema v${SCHEMA_VERSION}, engine v${ENGINE_VERSION})\n`);
